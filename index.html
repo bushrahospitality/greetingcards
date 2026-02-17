@@ -5,112 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>بطاقة تهنئة - بشرى الضيافة</title>
 
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    body { margin:0; font-family:Tajawal, Arial, sans-serif; background:#f4efe8; color:#1a1a1a; }
-    .wrap { max-width: 1000px; margin:0 auto; padding:18px; }
-    h1 { margin: 6px 0 10px; font-size: 28px; }
-    p { margin: 0 0 14px; color:#444; }
-
-    .box {
-      background:#fff;
-      border:1px solid #e6dfd6;
-      border-radius:16px;
-      padding:16px;
-      display:grid;
-      grid-template-columns: 320px 1fr;
-      gap:16px;
-      align-items:start;
+    body {
+      margin: 0;
+      font-family: Tajawal, Arial, sans-serif;
+      background: #f4efe8;
+      color: #1a1a1a;
     }
 
-    label { display:block; margin: 10px 0 6px; font-weight:700; }
-    select, input {
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid #e1d9cf;
-      outline:none;
-      font-size:16px;
-      background:#faf8f5;
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    h3 {
+      margin: 6px 0 10px;
+      font-size: 24px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: #444;
+    }
+
+    .box {
+      background: #fff;
+      border: 1px solid #e6dfd6;
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-weight: 700;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #e1d9cf;
+      outline: none;
+      font-size: 16px;
+      background: #faf8f5;
     }
 
     button {
-      width:100%;
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:12px;
-      border:0;
-      cursor:pointer;
-      font-weight:700;
-      font-size:16px;
-      background:#AD8252;
-      color:#111;
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      background: #AD8252;
+      color: #111;
     }
 
-    .note { margin-top:10px; font-size:12px; color:#666; line-height:1.6; }
+    .note {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.6;
+    }
 
-    .preview { display:grid; justify-items:center; gap:12px; }
+    .preview {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+    }
+
     canvas {
-      width:100%;
-      max-width: 480px;
-      height:auto;
-      border-radius:16px;
-      border:1px solid #e6dfd6;
-      background:#fff;
-    }
-
-    /* Calibration controls */
-    .calib {
       width: 100%;
       max-width: 480px;
-      background: #faf8f5;
+      height: auto;
+      border-radius: 16px;
       border: 1px solid #e6dfd6;
-      border-radius: 14px;
-      padding: 10px;
-      display: grid;
-      gap: 8px;
-      justify-items: center;
+      background: #fff;
     }
 
-    .calib .row {
-      display:flex;
-      gap:8px;
-      justify-content:center;
-      flex-wrap: wrap;
-    }
+    @media (max-width: 900px) {
+      .box {
+        grid-template-columns: 1fr;
+      }
 
-    .calib button {
-      width: auto;
-      margin-top: 0;
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      background: #1f5f99;
-      color: #fff;
-    }
-
-    .calib .xy {
-      font-size: 13px;
-      color: #333;
-      direction: ltr; /* الأرقام تظهر بشكل مرتب */
-    }
-
-    @media (max-width: 900px){
-      .box { grid-template-columns: 1fr; }
-      canvas { max-width: 100%; }
-      .calib { max-width: 100%; }
+      canvas {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <div class="wrap">
-    <h3>موظفي بشرى الضيافة 💙 صمّم بطاقة تهنئة رمضان باللغة اللي تختارها</h3>
+
+    <h3>موظفي بشرى الضيافة 💙 صمّم بطاقة تهنئة رمضان باللغة التي تختارها</h3>
+
     <p>اختر لغة التهنئة، اكتب اسمك، ثم حمّل بطاقتك مباشرة.</p>
 
     <div class="box">
+
       <div>
+
         <label for="lang">لغة التهنئة</label>
         <select id="lang">
           <option value="ar" selected>التهنئة باللغة العربية</option>
@@ -127,44 +135,27 @@
         <button type="button" id="downloadBtn">تنزيل البطاقة</button>
 
         <div class="note">
-          <div>📌 الاسم سيظهر <b>تحت عبارة التهنئة</b>.</div>
-          <div>💡 يمكنك ضبط مكان الاسم من الأسهم (المعايرة) في الجهة اليمنى.</div>
+          📌 الاسم سيظهر تحت عبارة التهنئة مباشرة.
         </div>
+
       </div>
 
       <div class="preview">
-        <!-- ✅ Canvas set to real image size -->
+
+        <!-- Canvas size matches real image size -->
         <canvas id="imageCanvas" width="2016" height="3840"></canvas>
 
-        <!-- ✅ Calibration panel -->
-        <div class="calib">
-          <div class="row">
-            <button type="button" id="upBtn">↑</button>
-          </div>
-          <div class="row">
-            <button type="button" id="leftBtn">←</button>
-            <button type="button" id="rightBtn">→</button>
-          </div>
-          <div class="row">
-            <button type="button" id="downBtn">↓</button>
-          </div>
+        <!-- Hidden link used by JS -->
+        <a id="downloadLink" download="Card.png" href="#" style="display:none;"></a>
 
-          <div class="xy">
-            X: <span id="xVal">0</span> | Y: <span id="yVal">0</span>
-          </div>
-
-          <div class="row">
-            <button type="button" id="copyBtn">نسخ الإحداثيات</button>
-            <button type="button" id="resetBtn">إرجاع للمكان الافتراضي</button>
-          </div>
-        </div>
-
-        <!-- hidden download link used by JS -->
-        <a id="downloadLink" download="Card.png" href="#" style="display:none;">download</a>
       </div>
+
     </div>
+
   </div>
 
+  <!-- JavaScript file -->
   <script src="js/app.js"></script>
+
 </body>
 </html>
