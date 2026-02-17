@@ -5,29 +5,19 @@
   const downloadBtn = document.getElementById("downloadBtn");
   const downloadLink = document.getElementById("downloadLink");
 
-  // Calibration elements
-  const upBtn = document.getElementById("upBtn");
-  const downBtn = document.getElementById("downBtn");
-  const leftBtn = document.getElementById("leftBtn");
-  const rightBtn = document.getElementById("rightBtn");
-  const copyBtn = document.getElementById("copyBtn");
-  const resetBtn = document.getElementById("resetBtn");
-  const xVal = document.getElementById("xVal");
-  const yVal = document.getElementById("yVal");
-
   if (!langEl || !nameEl || !canvas || !downloadBtn || !downloadLink) return;
 
-  // Keep page RTL Arabic always
+  // تثبيت لغة الصفحة عربي RTL
   document.documentElement.lang = "ar";
   document.documentElement.dir = "rtl";
 
-  // Match your image size exactly
+  // مقاس الصورة الحقيقي
   canvas.width = 2016;
   canvas.height = 3840;
 
   const ctx = canvas.getContext("2d");
 
-  // ✅ Your exact filenames
+  // الصور حسب اللغة
   const CARD_BG = {
     ar: "images/card-ar.png",
     en: "images/card-en.png",
@@ -37,15 +27,11 @@
     ur: "images/card-ur.png",
   };
 
-  // ✅ Default position (the red rectangle area)
-  const DEFAULT_NAME_X = 1008; // center of 2016
-  const DEFAULT_NAME_Y = 3150; // your target zone under the greeting text
+  // مكان الاسم (المستطيل الأحمر)
+  const NAME_X = 1008;
+  const NAME_Y = 3150;
 
-  // current position (calibrated)
-  let nameX = DEFAULT_NAME_X;
-  let nameY = DEFAULT_NAME_Y;
-
-  // Font sizes per language (optional)
+  // حجم الخط حسب اللغة
   const FONT_SIZE = {
     ar: 95,
     ur: 95,
@@ -55,59 +41,47 @@
     in: 85,
   };
 
-  const NAME_COLOR = "#AD8252";
+  // ✅ اللون الجديد المطلوب
+  const NAME_COLOR = "#154F83";
+
   const FONT_FAMILY = "Tajawal, Arial, sans-serif";
   const FONT_WEIGHT = "700";
-  const STEP = 10;
 
   const bgImg = new Image();
   bgImg.crossOrigin = "anonymous";
 
-  function getBgSrc() {
-    const lang = langEl.value || "ar";
-    return CARD_BG[lang] || CARD_BG.ar;
-  }
-
-  function updateXYUI() {
-    if (xVal) xVal.textContent = String(nameX);
-    if (yVal) yVal.textContent = String(nameY);
-  }
-
   function loadBackground() {
-    bgImg.src = getBgSrc();
+    const lang = langEl.value || "ar";
+    bgImg.src = CARD_BG[lang] || CARD_BG.ar;
   }
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Background
     if (bgImg.complete && bgImg.naturalWidth) {
       ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
     }
 
-    // Name
     const name = (nameEl.value || "").trim();
-    if (name) {
-      const lang = langEl.value || "ar";
-      let size = FONT_SIZE[lang] || 85;
+    if (!name) return;
 
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillStyle = NAME_COLOR;
+    const lang = langEl.value || "ar";
+    let size = FONT_SIZE[lang] || 85;
 
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = NAME_COLOR;
+
+    ctx.font = `${FONT_WEIGHT} ${size}px ${FONT_FAMILY}`;
+
+    // تصغير تلقائي لو الاسم طويل
+    const maxWidth = canvas.width * 0.75;
+    while (ctx.measureText(name).width > maxWidth && size > 55) {
+      size -= 2;
       ctx.font = `${FONT_WEIGHT} ${size}px ${FONT_FAMILY}`;
-
-      // Auto-fit for long names
-      const maxWidth = canvas.width * 0.75;
-      while (ctx.measureText(name).width > maxWidth && size > 55) {
-        size -= 2;
-        ctx.font = `${FONT_WEIGHT} ${size}px ${FONT_FAMILY}`;
-      }
-
-      ctx.fillText(name, nameX, nameY);
     }
 
-    updateXYUI();
+    ctx.fillText(name, NAME_X, NAME_Y);
   }
 
   function download() {
@@ -125,58 +99,15 @@
     downloadLink.click();
   }
 
-  // Calibration moves
-  function move(dx, dy) {
-    nameX += dx;
-    nameY += dy;
-    draw();
-  }
-
-  // Button events
   langEl.addEventListener("change", () => {
     loadBackground();
-    // keep same position, just change background
     draw();
   });
 
   nameEl.addEventListener("input", draw);
   downloadBtn.addEventListener("click", download);
 
-  if (upBtn) upBtn.addEventListener("click", () => move(0, -STEP));
-  if (downBtn) downBtn.addEventListener("click", () => move(0, STEP));
-  if (leftBtn) leftBtn.addEventListener("click", () => move(-STEP, 0));
-  if (rightBtn) rightBtn.addEventListener("click", () => move(STEP, 0));
-
-  if (resetBtn) resetBtn.addEventListener("click", () => {
-    nameX = DEFAULT_NAME_X;
-    nameY = DEFAULT_NAME_Y;
-    draw();
-  });
-
-  if (copyBtn) copyBtn.addEventListener("click", async () => {
-    const lang = langEl.value || "ar";
-    const text = `${lang}: { x: ${nameX}, y: ${nameY} }`;
-    try {
-      await navigator.clipboard.writeText(text);
-      copyBtn.textContent = "تم النسخ ✅";
-      setTimeout(() => (copyBtn.textContent = "نسخ الإحداثيات"), 1200);
-    } catch (e) {
-      // fallback
-      alert(text);
-    }
-  });
-
-  // Keyboard arrows (nice bonus)
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowUp") move(0, -STEP);
-    if (e.key === "ArrowDown") move(0, STEP);
-    if (e.key === "ArrowLeft") move(-STEP, 0);
-    if (e.key === "ArrowRight") move(STEP, 0);
-  });
-
   bgImg.onload = draw;
 
-  // Init
-  updateXYUI();
   loadBackground();
 })();
