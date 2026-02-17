@@ -1,225 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="ar" dir="rtl">
 <head>
-	<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="تهنئة عيد الفطر المبارك - إهداء شركة عين الخيال للإنتاج الإعلامي">
-    <meta name="author" content="شركة عين الخيال للإنتاج الإعلامي">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بطاقة تهنئة - بشرى الضيافة</title>
 
-    <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-	<meta property="og:site_name" content="تهنئة عيد الفطر المبارك - إهداء شركة عين الخيال للإنتاج الإعلامي" /> <!-- website name -->
-	<meta property="og:site" content="" /> <!-- website link -->
-	<meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
-	<meta property="og:description" content="تهنئة عيد الفطر المبارك - إهداء شركة عين الخيال للإنتاج الإعلامي" /> <!-- description shown in the actual shared post -->
-	<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-	<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-	<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Webpage Title -->
-    <title>عين الخيال - تهنئة عيد الفطر المبارك</title>
-    
-    <!-- Styles -->
-   
+  <style>
+    body { margin:0; font-family:Tajawal, Arial, sans-serif; background:#f4efe8; color:#1a1a1a; }
+    .wrap { max-width: 1000px; margin:0 auto; padding:18px; }
+    h1 { margin: 6px 0 10px; font-size: 28px; }
+    p { margin: 0 0 14px; color:#444; }
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/fontawesome-all.min.css" rel="stylesheet">
-    <link href="css/swiper.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
-	
-	<!-- Favicon  -->
-    <link rel="icon" href="images/favicon.png">
+    .box {
+      background:#fff;
+      border:1px solid #e6dfd6;
+      border-radius:16px;
+      padding:16px;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    label { display:block; margin: 10px 0 6px; font-weight:700; }
+    select, input {
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid #e1d9cf;
+      outline:none;
+      font-size:16px;
+      background:#faf8f5;
+    }
+
+    button {
+      width:100%;
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+      font-size:16px;
+      background:#AD8252;
+      color:#111;
+    }
+
+    .note { margin-top:10px; font-size:12px; color:#666; line-height:1.6; }
+
+    .preview { display:grid; justify-items:center; gap:12px; }
+    canvas {
+      width:100%;
+      max-width: 480px;
+      height:auto;
+      border-radius:16px;
+      border:1px solid #e6dfd6;
+      background:#fff;
+    }
+
+    @media (max-width: 900px){
+      .box { grid-template-columns: 1fr; }
+      canvas { max-width: 100%; }
+    }
+  </style>
 </head>
+
 <body>
-    
-    <!-- Navigation -->
-    <nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-light" aria-label="Main navigation">
-        <div class="container">
+  <div class="wrap">
+    <h1>صمّم بطاقتك</h1>
+    <p>اختر لغة الاسم، اكتب اسمك، ثم حمّل بطاقتك مباشرة.</p>
 
-            <!-- Image Logo -->
-            <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.png" alt="alternative"></a> 
+    <div class="box">
+      <div>
+        <label for="lang">لغة الاسم</label>
+        <select id="lang">
+          <option value="ar" selected>التهنئة باللغة العربية</option>
+          <option value="en">التهنئة باللغة الإنجليزية</option>
+          <option value="fr">التهنئة باللغة الفرنسية</option>
+          <option value="bn">التهنئة باللغة البنغالية</option>
+          <option value="in">التهنئة باللغة الإندونيسية</option>
+          <option value="ur">التهنئة باللغة الأردية</option>
+        </select>
 
-            <!-- Text Logo - صمم بطاقتك الخاصة -->
-            <!-- <a class="navbar-brand logo-text" href="index.html">صمم بطاقتك الخاصة</a> -->
 
+        <label for="name">الاسم</label>
+        <input id="name" type="text" placeholder="اكتب اسمك هنا" autocomplete="name" />
 
-        </div> <!-- end of container -->
-    </nav> <!-- end of navbar -->
-    <!-- end of navigation -->
+        <button type="button" id="downloadBtn">تنزيل البطاقة</button>
 
-      
-    <!-- Header -->
-    <header id="header" class="header">
-        <img class="decoration-star" src="images/decoration-star.svg" alt="alternative">
-        <img class="decoration-star-2" src="images/decoration-star.svg" alt="alternative">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-xl-5">
-                    <div class="text-container">
-                        <h1 class="h1-large">كل عام وأنتم بخير</h1>
-                        <p class="p-large" > 😃🍬🎁 <br> يمكنكم الحصول على تهنئتكم الخاصة بكل سهولة بمناسبة عيد الفطر المبارك</p>
-                    </div> <!-- end of text-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-5 col-xl-7">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/header.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </header> <!-- end of header -->
-    <!-- end of header -->
-
-    
-   <!-- <header class="header-up">
-    </header> -->
-  
-    <div class="body2">
-    <div class="controls">
-     <!-- <input class="controls__input" type="file" id="imageLoader" name="imageLoader"/>
-      <label class="controls__label" for="name">First, choose an image.</label> -->
-      <br>
-      <label class="controls__label" for="name"> الاسم</label>
-            <br>
-  
-            <input class="controls__input" id="name" type="text" value=""/>
-        <br>
-        <br>
-  
-    </div>
-    
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-      
-    <div id="canvas-wrap"  class="canvas">
-       <canvas  id="imageCanvas" width=2160px height=3840px>
-         <span style="font-family: 'Aktiv Grotesk Arabic', sans-serif; font-weight: bold;">&nbsp;</span> 
-         <canvas id="canvasID"></canvas>
-      </canvas> 
-    
-      <br>
-      <button  type="button" class="controls__btn">    <a id="download" download="Eid2024.jpg" href="" onclick="download_img(this);">تنزيل</a>
-  </button>
+        <div class="note">
+          <div> 📌 الاسم سيظهر <b>تحت عبارة التهنئة”</b>.</div>
         </div>
+      </div>
+
+      <div class="preview">
+        <!-- High-res canvas -->
+        <canvas id="imageCanvas" width="2160" height="3840"></canvas>
+
+        <!-- hidden download link used by JS -->
+        <a id="downloadLink" download="Card.jpg" href="#" style="display:none;">download</a>
+      </div>
     </div>
-    </div> <!-- end of col -->
-</div> <!-- end of row -->
-
-
-
-  
-       <!-- <div id="canvas-wrap1"  class="canvas">
-       <canvas style="display:block" id="imageCanvas1" width=450px height=450px >
-          <canvas id="canvasID1"></canvas>
-      </canvas> 
-      
-       <br>
-      <button  type="button" class="controls__btn">    <a id="download1" download="Ramadan2024.jpg" href="" onclick="download_img1(this);">تنزيل</a>
-  </button>
-           </div> -->
-      
-       
-  
-      <!-- <div id="canvas-wrap2"  class="canvas">
-       <canvas style="display:block" id="imageCanvas2" width=450px height=450px >
-          <canvas id="canvasID1"></canvas>
-      </canvas> 
-      
-       <br>
-      <button  type="button" class="controls__btn">    <a id="download2" download="Ramadan2024.jpg" href="" onclick="download_img2(this);">تنزيل</a>
-  </button>
-           </div>-->
-      
-    
-  
-      <!-- <div id="canvas-wrap3"  class="canvas">
-       <canvas style="display:block" id="imageCanvas3" width=450px height=450px >
-          <canvas id="canvasID1"></canvas>
-      </canvas> 
-      
-       <br>
-      <button  type="button" class="controls__btn">    <a id="download3" download="Ramadan2024.jpg" href="" onclick="download_img3(this);">تنزيل</a>
-  </button>
-           </div>-->
-      
-  
-       <!-- <div id="canvas-wrap4"  class="canvas">
-       <canvas style="display:block" id="imageCanvas4" width=450px height=450px >
-          <canvas id="canvasID1"></canvas>
-      </canvas> 
-      
-       <br>
-      <button  type="button" class="controls__btn">    <a id="download4" download="Ramadan2024.jpg" href="" onclick="download_img4(this);">تنزيل</a>
-  </button>
-           </div> -->
-      
-     
-      <!-- <div id="canvas-wrap5"  class="canvas">
-       <canvas style="display:block" id="imageCanvas5" width=450px height=450px >
-          <canvas id="canvasID1"></canvas>
-      </canvas> 
-      
-       <br>
-      <button  type="button" class="controls__btn">    <a id="download5" download="Ramadan2024.jpg" href="" onclick="download_img5(this);">تنزيل</a>
-  </button>
-           </div>-->
-      
-      
-  
-      <!-- <div id="canvas-wrap6"  class="canvas">
-       <canvas style="display:block" id="imageCanvas6" width=450px height=450px >
-          <canvas id="canvasID1"></canvas>
-      </canvas> 
-      
-       <br>
-      <button  type="button" class="controls__btn">    <a id="download6" download="Ramadan2024.jpg" href="" onclick="download_img6(this);">تنزيل</a>
-  </button>
-           </div>
-          
-            <br>
-      <br> -->
-          
-  <!-- <div id="canvas-wrap7"  class="canvas">
-       <canvas style="display:block" id="imageCanvas7" width=450px height=450px >
-          <canvas id="canvasID1"></canvas>
-      </canvas> 
-      
-       <br>
-      <button  type="button" class="controls__btn">    <a id="download6" download="Ramadan2024.jpg" href="" onclick="download_img(this);">تنزيل</a>
-  </button>
-           </div> -->
-      
   </div>
-  </div>
-      
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js'></script>
-  
-    
-  
-      <script  src="js/newindex.js"></script>
-    <!-- Footer -->
-    <footer id="footer">
-        <div class="footer bg-gray">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-        Copyright (c) 2024 <a href="" ><strong style="color: #AD8252" >Fantasyeye</strong></a> All Rights Reserved.
-    </div> <!-- end of col -->
-</div> <!-- end of row -->
-</div> <!-- end of container -->
-</div> <!-- end of footer -->  
-      </footer>
-    <!-- end of footer -->
 
-    	
-    <!-- Scripts -->
-    <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
-    <script src="js/swiper.min.js"></script> <!-- Swiper for image and text sliders -->
-    <script src="js/purecounter.min.js"></script> <!-- Purecounter counter for statistics numbers -->
-    <script src="js/scripts.js"></script> <!-- Custom scripts -->
+  <script src="js/app.js"></script>
 </body>
 </html>
+
