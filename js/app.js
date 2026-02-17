@@ -5,13 +5,19 @@
   const downloadBtn = document.getElementById("downloadBtn");
   const downloadLink = document.getElementById("downloadLink");
 
+  const upBtn = document.getElementById("upBtn");
+  const downBtn = document.getElementById("downBtn");
+  const leftBtn = document.getElementById("leftBtn");
+  const rightBtn = document.getElementById("rightBtn");
+  const resetBtn = document.getElementById("resetBtn");
+
   if (!langEl || !nameEl || !canvas || !downloadBtn || !downloadLink) return;
 
-  // تثبيت لغة الصفحة عربي RTL
+  // تثبيت الصفحة عربي RTL
   document.documentElement.lang = "ar";
   document.documentElement.dir = "rtl";
 
-  // مقاس الصورة الحقيقي
+  // مقاس الصور الحقيقي
   canvas.width = 2016;
   canvas.height = 3840;
 
@@ -27,9 +33,14 @@
     ur: "images/card-ur.png",
   };
 
-  // مكان الاسم (المستطيل الأحمر)
-  const NAME_X = 1008;
-  const NAME_Y = 3150;
+  // مكان الاسم الافتراضي (المستطيل الأحمر)
+  const DEFAULT_X = 1008;  // منتصف 2016
+  const DEFAULT_Y = 3150;  // تحت عبارة التهنئة
+
+  let nameX = DEFAULT_X;
+  let nameY = DEFAULT_Y;
+
+  const STEP = 10;
 
   // حجم الخط حسب اللغة
   const FONT_SIZE = {
@@ -41,9 +52,7 @@
     in: 85,
   };
 
-  // ✅ اللون الجديد المطلوب
   const NAME_COLOR = "#154F83";
-
   const FONT_FAMILY = "Tajawal, Arial, sans-serif";
   const FONT_WEIGHT = "700";
 
@@ -58,6 +67,7 @@
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // رسم الخلفية
     if (bgImg.complete && bgImg.naturalWidth) {
       ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
     }
@@ -71,7 +81,6 @@
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = NAME_COLOR;
-
     ctx.font = `${FONT_WEIGHT} ${size}px ${FONT_FAMILY}`;
 
     // تصغير تلقائي لو الاسم طويل
@@ -81,11 +90,12 @@
       ctx.font = `${FONT_WEIGHT} ${size}px ${FONT_FAMILY}`;
     }
 
-    ctx.fillText(name, NAME_X, NAME_Y);
+    ctx.fillText(name, nameX, nameY);
   }
 
   function download() {
     draw();
+
     const dataUrl = canvas.toDataURL("image/png");
 
     const safeName = (nameEl.value || "name")
@@ -99,6 +109,13 @@
     downloadLink.click();
   }
 
+  function move(dx, dy) {
+    nameX += dx;
+    nameY += dy;
+    draw();
+  }
+
+  // Events
   langEl.addEventListener("change", () => {
     loadBackground();
     draw();
@@ -107,7 +124,21 @@
   nameEl.addEventListener("input", draw);
   downloadBtn.addEventListener("click", download);
 
+  if (upBtn) upBtn.addEventListener("click", () => move(0, -STEP));
+  if (downBtn) downBtn.addEventListener("click", () => move(0, STEP));
+  if (leftBtn) leftBtn.addEventListener("click", () => move(-STEP, 0));
+  if (rightBtn) rightBtn.addEventListener("click", () => move(STEP, 0));
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      nameX = DEFAULT_X;
+      nameY = DEFAULT_Y;
+      draw();
+    });
+  }
+
   bgImg.onload = draw;
 
+  // تشغيل أولي
   loadBackground();
 })();
