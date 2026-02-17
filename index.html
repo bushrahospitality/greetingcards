@@ -60,21 +60,58 @@
       background:#fff;
     }
 
+    /* Calibration controls */
+    .calib {
+      width: 100%;
+      max-width: 480px;
+      background: #faf8f5;
+      border: 1px solid #e6dfd6;
+      border-radius: 14px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+    }
+
+    .calib .row {
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      flex-wrap: wrap;
+    }
+
+    .calib button {
+      width: auto;
+      margin-top: 0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      background: #1f5f99;
+      color: #fff;
+    }
+
+    .calib .xy {
+      font-size: 13px;
+      color: #333;
+      direction: ltr; /* الأرقام تظهر بشكل مرتب */
+    }
+
     @media (max-width: 900px){
       .box { grid-template-columns: 1fr; }
       canvas { max-width: 100%; }
+      .calib { max-width: 100%; }
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <h3 dir="rtl"> موظفي بشرى الضيافة 💙 صمّم بطاقة تهنئة رمضان باللغة اللي تختارها  </h3>
-    <p>اختر لغة الاسم، اكتب اسمك، ثم حمّل بطاقتك مباشرة.</p>
+    <h3>موظفي بشرى الضيافة 💙 صمّم بطاقة تهنئة رمضان باللغة اللي تختارها</h3>
+    <p>اختر لغة التهنئة، اكتب اسمك، ثم حمّل بطاقتك مباشرة.</p>
 
     <div class="box">
       <div>
-        <label for="lang">لغة الاسم</label>
+        <label for="lang">لغة التهنئة</label>
         <select id="lang">
           <option value="ar" selected>التهنئة باللغة العربية</option>
           <option value="en">التهنئة باللغة الإنجليزية</option>
@@ -84,23 +121,46 @@
           <option value="ur">التهنئة باللغة الأردية</option>
         </select>
 
-
         <label for="name">الاسم</label>
         <input id="name" type="text" placeholder="اكتب اسمك هنا" autocomplete="name" />
 
         <button type="button" id="downloadBtn">تنزيل البطاقة</button>
 
         <div class="note">
-          <div> 📌 الاسم سيظهر <b>تحت عبارة التهنئة”</b>.</div>
+          <div>📌 الاسم سيظهر <b>تحت عبارة التهنئة</b>.</div>
+          <div>💡 يمكنك ضبط مكان الاسم من الأسهم (المعايرة) في الجهة اليمنى.</div>
         </div>
       </div>
 
       <div class="preview">
-        <!-- High-res canvas -->
-        <canvas id="imageCanvas" width="2160" height="3840"></canvas>
+        <!-- ✅ Canvas set to real image size -->
+        <canvas id="imageCanvas" width="2016" height="3840"></canvas>
+
+        <!-- ✅ Calibration panel -->
+        <div class="calib">
+          <div class="row">
+            <button type="button" id="upBtn">↑</button>
+          </div>
+          <div class="row">
+            <button type="button" id="leftBtn">←</button>
+            <button type="button" id="rightBtn">→</button>
+          </div>
+          <div class="row">
+            <button type="button" id="downBtn">↓</button>
+          </div>
+
+          <div class="xy">
+            X: <span id="xVal">0</span> | Y: <span id="yVal">0</span>
+          </div>
+
+          <div class="row">
+            <button type="button" id="copyBtn">نسخ الإحداثيات</button>
+            <button type="button" id="resetBtn">إرجاع للمكان الافتراضي</button>
+          </div>
+        </div>
 
         <!-- hidden download link used by JS -->
-        <a id="downloadLink" download="Card.jpg" href="#" style="display:none;">download</a>
+        <a id="downloadLink" download="Card.png" href="#" style="display:none;">download</a>
       </div>
     </div>
   </div>
@@ -108,8 +168,3 @@
   <script src="js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
