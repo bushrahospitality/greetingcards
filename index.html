@@ -8,6 +8,75 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
+.eid-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.eid-popup.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.eid-popup-box {
+  width: min(90%, 420px);
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  border: 1px solid #e8dfd2;
+  animation: popupScale 0.35s ease;
+}
+
+.eid-popup-icon {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.eid-popup-box h3 {
+  margin: 0 0 10px;
+  color: #154F83;
+  font-size: 28px;
+}
+
+.eid-popup-box p {
+  margin: 0 0 18px;
+  color: #2f2f2f;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.eid-popup-box button {
+  background: #AD8252;
+  color: #111;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes popupScale {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 #balloon-layer{
   position: fixed;
   inset: 0;
@@ -199,6 +268,15 @@
 <body>
 
   <div id="balloon-layer"></div>
+<!-- Eid Greeting Popup -->
+<div id="eidPopup" class="eid-popup">
+  <div class="eid-popup-box">
+    <div class="eid-popup-icon">✨</div>
+    <h3 id="eidPopupTitle">كل عام وأنت بخير</h3>
+    <p id="eidPopupMessage">عيد سعيد</p>
+    <button type="button" id="closePopupBtn">إغلاق</button>
+  </div>
+</div>
 
   <div class="wrap">
 
