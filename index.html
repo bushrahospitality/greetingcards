@@ -268,43 +268,37 @@
   </div>
 
   <script src="js/app.js"></script>
-<script>
-window.addEventListener("load", () => {
-  const layer = document.getElementById("balloon-layer");
-  if (!layer) return;
+ <script>
+    window.addEventListener("load", () => {
+      const layer = document.getElementById("balloon-layer");
 
-  const balloonImages = [
-    "balloon-gold-1.png",
-    "balloon-blue-1.png"
-  ];
+      // استخدمي صورك الحقيقية هنا
+      const balloonImages = [
+        "balloon-gold-1.png",
+        "balloon-blue-2.png"
+      ];
 
-  const isMobile = window.innerWidth < 768;
-  const totalBalloons = isMobile ? 18 : 30;
+      const total = 14;
 
-  for (let i = 0; i < totalBalloons; i++) {
-    const balloon = document.createElement("img");
-    balloon.className = "real-balloon";
-    balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
-    balloon.alt = "balloon";
+      for (let i = 0; i < total; i++) {
+        const img = document.createElement("img");
+        img.className = "balloon";
+        img.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
+        img.alt = "balloon";
 
-    const left = Math.random() * 100;
-    const size = isMobile ? 60 + Math.random() * 30 : 75 + Math.random() * 40;
-    const duration = 2 + Math.random() * 1.5;
-    const delay = Math.random() * 1.2;
+        img.style.left = Math.random() * 100 + "%";
+        img.style.width = (55 + Math.random() * 35) + "px";
+        img.style.animationDuration = (3 + Math.random() * 2) + "s";
+        img.style.animationDelay = (Math.random() * 0.8) + "s";
 
-    balloon.style.left = `${left}%`;
-    balloon.style.width = `${size}px`;
-    balloon.style.animationDuration = `${duration}s`;
-    balloon.style.animationDelay = `${delay}s`;
+        layer.appendChild(img);
+      }
 
-    layer.appendChild(balloon);
-  }
-
-  setTimeout(() => {
-    layer.innerHTML = "";
-  }, 7000);
-});
-</script>
+      setTimeout(() => {
+        layer.innerHTML = "";
+      }, 7000);
+    });
+  </script>
 </body>
 </html>
 
