@@ -13,7 +13,7 @@
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 9999;
+  z-index: 2;
 }
 
 .real-balloon{
@@ -21,7 +21,7 @@
   top: -220px;
   width: 90px;
   height: auto;
-  opacity: 0.95;
+  opacity: 0.3;
   animation-name: balloonFall;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
@@ -82,6 +82,8 @@
       grid-template-columns: 320px 1fr;
       gap: 16px;
       align-items: start;
+      position: relative;
+      z-index: 2;
     }
 
     label {
@@ -272,7 +274,7 @@
 
       const left = Math.random() * 100;
       const size = 70 + Math.random() * 55;       // 70 - 125 px
-      const duration = 6 + Math.random() * 4;     // 6 - 10 sec
+      const duration = 10 + Math.random() * 5;     // 6 - 10 sec
       const delay = Math.random() * 2.5;          // random start
       const z = 9999;
 
