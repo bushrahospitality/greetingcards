@@ -99,7 +99,7 @@
     const cleanName = firstName || "زميلنا العزيز";
     
     eidPopupTitle.textContent = `كل عام وأنت بخير ${cleanName}`;
-    eidPopupMessage.textContent = "عيد سعيد ✨";
+    eidPopupMessage.textContent = "عيدكم مبارك ✨";
     eidPopup.classList.add("show");
   }
 
