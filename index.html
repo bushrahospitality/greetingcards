@@ -8,50 +8,69 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-#balloon-layer{
+#balloon-back-layer,
+#balloon-front-layer{
   position: fixed;
   inset: 0;
-  pointer-events: none;
   overflow: hidden;
-  z-index: 0;
+  pointer-events: none;
+}
+
+#balloon-back-layer{
+  z-index: 1;
+}
+
+#balloon-front-layer{
+  z-index: 9999;
+}
+
+.wrap{
+  position: relative;
+  z-index: 10;
 }
 
 .real-balloon{
   position: absolute;
-  bottom: -220px;
-  width: 80px;
+  bottom: -240px;
   height: auto;
-  opacity: 0.5;
   animation-name: balloonRise;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  will-change: transform, bottom, left;
+  will-change: transform, opacity;
+}
+
+.balloon-back{
+  opacity: 0.28;
+  filter: blur(0.3px);
+}
+
+.balloon-front{
+  opacity: 0.55;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.18));
 }
 
 @keyframes balloonRise {
   0% {
-    transform: translateY(0) translateX(0) rotate(0deg);
+    transform: translateY(0) translateX(0) rotate(0deg) scale(0.96);
     opacity: 0;
   }
-
   10% {
-    opacity: 0.45;
+    opacity: inherit;
   }
-
-  25% {
-    transform: translateY(-25vh) translateX(12px) rotate(3deg);
+  20% {
+    transform: translateY(-18vh) translateX(18px) rotate(4deg) scale(1);
   }
-
-  50% {
-    transform: translateY(-50vh) translateX(-14px) rotate(-3deg);
+  40% {
+    transform: translateY(-40vh) translateX(-22px) rotate(-4deg) scale(1.02);
   }
-
-  75% {
-    transform: translateY(-75vh) translateX(10px) rotate(2deg);
+  60% {
+    transform: translateY(-65vh) translateX(16px) rotate(3deg) scale(1);
   }
-
+  80% {
+    transform: translateY(-92vh) translateX(-14px) rotate(-2deg) scale(0.98);
+  }
   100% {
-    transform: translateY(-120vh) translateX(-8px) rotate(-2deg);
+    transform: translateY(-125vh) translateX(8px) rotate(1deg) scale(0.96);
     opacity: 0;
   }
 }
@@ -193,7 +212,8 @@
 
 <body>
 
- <div id="balloon-layer"></div>
+ <div id="balloon-back-layer"></div>
+ <div id="balloon-front-layer"></div>
 
   <div class="wrap">
 
@@ -260,45 +280,59 @@
 
   <script src="js/app.js"></script>
 <script>
-  window.addEventListener("load", () => {
-    const layer = document.getElementById("balloon-layer");
-    if (!layer) return;
+window.addEventListener("load", () => {
+  const backLayer = document.getElementById("balloon-back-layer");
+  const frontLayer = document.getElementById("balloon-front-layer");
+  if (!backLayer || !frontLayer) return;
 
-    const balloonImages = [
-      "balloon-gold-1.png",
-      "balloon-blue-1.png"
-    ];
+  const balloonImages = [
+    "images/balloon-gold.png",
+    "images/balloon-blue.png"
+  ];
 
-    // عدد مناسب للموبايل
-    const totalBalloons = window.innerWidth < 768 ? 10 : 16;
+  const isMobile = window.innerWidth < 768;
 
-    for (let i = 0; i < totalBalloons; i++) {
-      const balloon = document.createElement("img");
-      balloon.className = "real-balloon";
-      balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
-      balloon.alt = "balloon";
+  const backCount = isMobile ? 8 : 12;
+  const frontCount = isMobile ? 6 : 10;
 
-      const left = Math.random() * 100;
-      const size = window.innerWidth < 768
-        ? 55 + Math.random() * 35
-        : 70 + Math.random() * 45;
+  function createBalloon(layer, type) {
+    const balloon = document.createElement("img");
+    balloon.className = `real-balloon ${type}`;
+    balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
+    balloon.alt = "balloon";
 
-      const duration = 4 + Math.random() * 3; // سريع لكن ناعم
-      const delay = Math.random() * 1.2;
+    const left = Math.random() * 100;
+    const size = type === "balloon-front"
+      ? (isMobile ? 70 + Math.random() * 35 : 85 + Math.random() * 45)
+      : (isMobile ? 50 + Math.random() * 25 : 60 + Math.random() * 35);
 
-      balloon.style.left = `${left}%`;
-      balloon.style.width = `${size}px`;
-      balloon.style.animationDuration = `${duration}s`;
-      balloon.style.animationDelay = `${delay}s`;
+    const duration = type === "balloon-front"
+      ? (3.8 + Math.random() * 2.2)
+      : (5 + Math.random() * 3);
 
-      layer.appendChild(balloon);
-    }
+    const delay = Math.random() * 1.2;
 
-    // إزالة البالونات بعد نهاية الحركة
-    setTimeout(() => {
-      layer.innerHTML = "";
-    }, 9000);
-  });
+    balloon.style.left = `${left}%`;
+    balloon.style.width = `${size}px`;
+    balloon.style.animationDuration = `${duration}s`;
+    balloon.style.animationDelay = `${delay}s`;
+
+    layer.appendChild(balloon);
+  }
+
+  for (let i = 0; i < backCount; i++) {
+    createBalloon(backLayer, "balloon-back");
+  }
+
+  for (let i = 0; i < frontCount; i++) {
+    createBalloon(frontLayer, "balloon-front");
+  }
+
+  setTimeout(() => {
+    backLayer.innerHTML = "";
+    frontLayer.innerHTML = "";
+  }, 10000);
+});
 </script>
 </body>
 </html>
