@@ -100,19 +100,57 @@
 
     const safeName = (nameEl.value || "name")
       .trim()
-      .replace(/[^\w\u0600-\u06FF\u0980-\u09FF\u00C0-\u017F\s-]/g, "")
+      .replace(/[^\w\u0600-\u06FF\u00C0-\u017F\s-]/g, "")
       .replace(/\s+/g, "_");
 
     const lang = langEl.value || "ar";
     downloadLink.href = dataUrl;
     downloadLink.download = `Bushra_${lang}_${safeName}.png`;
     downloadLink.click();
+
+    // تظهر الرسالة بعد التنزيل
+    setTimeout(() => {
+      showEidPopup(nameEl.value);
+    }, 500);
   }
 
   function move(dx, dy) {
     nameX += dx;
     nameY += dy;
     draw();
+  }
+
+  // رسالة التهنئة
+  const eidPopup = document.getElementById("eidPopup");
+  const eidPopupTitle = document.getElementById("eidPopupTitle");
+  const eidPopupMessage = document.getElementById("eidPopupMessage");
+  const closePopupBtn = document.getElementById("closePopupBtn");
+
+  // دالة لإظهار الرسالة
+  function showEidPopup(employeeName) {
+    const cleanName = (employeeName || "").trim() || "زميلنا العزيز";
+    eidPopupTitle.textContent = `كل عام وأنت بخير ${cleanName}`;
+    eidPopupMessage.textContent = "عيد سعيد ✨";
+    eidPopup.classList.add("show");
+  }
+
+  // دالة لإخفاء الرسالة
+  function hideEidPopup() {
+    eidPopup.classList.remove("show");
+  }
+
+  // إغلاق الـ popup عند الضغط على الزر
+  if (closePopupBtn) {
+    closePopupBtn.addEventListener("click", hideEidPopup);
+  }
+
+  // إغلاق الـ popup عند الضغط في أي مكان خارج الـ popup
+  if (eidPopup) {
+    eidPopup.addEventListener("click", (e) => {
+      if (e.target === eidPopup) {
+        hideEidPopup();
+      }
+    });
   }
 
   // Events
