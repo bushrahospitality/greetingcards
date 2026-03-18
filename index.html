@@ -281,9 +281,8 @@
   <script src="js/app.js"></script>
 <script>
 window.addEventListener("load", () => {
-  const backLayer = document.getElementById("balloon-back-layer");
-  const frontLayer = document.getElementById("balloon-front-layer");
-  if (!backLayer || !frontLayer) return;
+  const layer = document.getElementById("balloon-layer");
+  if (!layer) return;
 
   const balloonImages = [
     "balloon-gold-1.png",
@@ -291,25 +290,17 @@ window.addEventListener("load", () => {
   ];
 
   const isMobile = window.innerWidth < 768;
+  const totalBalloons = isMobile ? 18 : 30;
 
-  const backCount = isMobile ? 8 : 12;
-  const frontCount = isMobile ? 6 : 10;
-
-  function createBalloon(layer, type) {
+  for (let i = 0; i < totalBalloons; i++) {
     const balloon = document.createElement("img");
-    balloon.className = `real-balloon ${type}`;
+    balloon.className = "real-balloon";
     balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
     balloon.alt = "balloon";
 
     const left = Math.random() * 100;
-    const size = type === "balloon-front"
-      ? (isMobile ? 70 + Math.random() * 35 : 85 + Math.random() * 45)
-      : (isMobile ? 50 + Math.random() * 25 : 60 + Math.random() * 35);
-
-    const duration = type === "balloon-front"
-      ? (3.8 + Math.random() * 2.2)
-      : (5 + Math.random() * 3);
-
+    const size = isMobile ? 60 + Math.random() * 30 : 75 + Math.random() * 40;
+    const duration = 2 + Math.random() * 1.5;
     const delay = Math.random() * 1.2;
 
     balloon.style.left = `${left}%`;
@@ -320,18 +311,9 @@ window.addEventListener("load", () => {
     layer.appendChild(balloon);
   }
 
-  for (let i = 0; i < backCount; i++) {
-    createBalloon(backLayer, "balloon-back");
-  }
-
-  for (let i = 0; i < frontCount; i++) {
-    createBalloon(frontLayer, "balloon-front");
-  }
-
   setTimeout(() => {
-    backLayer.innerHTML = "";
-    frontLayer.innerHTML = "";
-  }, 10000);
+    layer.innerHTML = "";
+  }, 7000);
 });
 </script>
 </body>
