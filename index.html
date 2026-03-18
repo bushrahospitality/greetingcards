@@ -23,7 +23,7 @@
   height: auto;
 
   animation-name: fly;
-  animation-timing-function: linear;
+  animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 
   opacity: 0.9;
@@ -287,7 +287,7 @@ window.addEventListener("load", () => {
     b.style.width = (60 + Math.random() * 40) + "px";
 
     // سرعة الطيران
-    b.style.animationDuration = (3 + Math.random() * 2) + "s";
+    b.style.animationDuration = (5 + Math.random() * 3) + "s";
 
     // تأخير بسيط
     b.style.animationDelay = Math.random() * 1 + "s";
