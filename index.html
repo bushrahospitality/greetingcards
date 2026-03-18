@@ -8,58 +8,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Balloon animation */
-
-.balloon-container{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-overflow:hidden;
-z-index:9999;
+#balloon-layer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
 }
 
-.balloon{
-position:absolute;
-bottom:100%;
-width:40px;
-height:55px;
-border-radius:50%;
-animation:fall 6s linear forwards;
+.real-balloon{
+  position: absolute;
+  top: -220px;
+  width: 90px;
+  height: auto;
+  opacity: 0.95;
+  animation-name: balloonFall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  will-change: transform, top, left;
 }
 
-.balloon::after{
-content:"";
-position:absolute;
-width:2px;
-height:40px;
-background:#888;
-left:50%;
-top:55px;
-}
-
-.gold{
-background:#D4AF37;
-}
-
-.blue{
-background:#154F83;
-}
-
-@keyframes fall{
-0%{
-transform:translateY(-100px);
-opacity:0;
-}
-10%{
-opacity:1;
-}
-100%{
-transform:translateY(110vh);
-opacity:0.8;
-}
+@keyframes balloonFall {
+  0% {
+    transform: translateY(-120px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(25vh) translateX(8px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(50vh) translateX(-10px) rotate(-2deg);
+  }
+  75% {
+    transform: translateY(75vh) translateX(6px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(115vh) translateX(-4px) rotate(-1deg);
+    opacity: 0.98;
+  }
 }
     body {
       margin: 0;
@@ -197,7 +186,7 @@ opacity:0.8;
 
 <body>
 
-  <div class="balloon-container" id="balloons"></div>
+ <div id="balloon-layer"></div>
 
   <div class="wrap">
 
@@ -263,40 +252,45 @@ opacity:0.8;
   </div>
 
   <script src="js/app.js"></script>
-  <script>
+ <script>
+  window.addEventListener("load", () => {
+    const layer = document.getElementById("balloon-layer");
+    if (!layer) return;
 
-window.addEventListener("load",()=>{
+    const balloonImages = [
+      "images/balloon-gold.png",
+      "images/balloon-blue.png"
+    ];
 
-const container=document.getElementById("balloons");
+    const totalBalloons = 14;
 
-const colors=["gold","blue"];
+    for (let i = 0; i < totalBalloons; i++) {
+      const balloon = document.createElement("img");
+      balloon.className = "real-balloon";
+      balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
+      balloon.alt = "balloon";
 
-for(let i=0;i<20;i++){
+      const left = Math.random() * 100;
+      const size = 70 + Math.random() * 55;       // 70 - 125 px
+      const duration = 6 + Math.random() * 4;     // 6 - 10 sec
+      const delay = Math.random() * 2.5;          // random start
+      const z = 9999;
 
-let balloon=document.createElement("div");
+      balloon.style.left = `${left}%`;
+      balloon.style.width = `${size}px`;
+      balloon.style.animationDuration = `${duration}s`;
+      balloon.style.animationDelay = `${delay}s`;
+      balloon.style.zIndex = z;
 
-balloon.classList.add("balloon");
-balloon.classList.add(colors[Math.floor(Math.random()*colors.length)]);
+      layer.appendChild(balloon);
+    }
 
-balloon.style.left=Math.random()*100+"%";
-balloon.style.animationDelay=Math.random()*3+"s";
-balloon.style.width=(30+Math.random()*20)+"px";
-balloon.style.height=(40+Math.random()*30)+"px";
-
-container.appendChild(balloon);
-
-}
-
-/* remove balloons after animation */
-
-setTimeout(()=>{
-container.innerHTML="";
-},7000);
-
-});
-
+    // حذف البالونات بعد نهاية الأنيميشن
+    setTimeout(() => {
+      layer.innerHTML = "";
+    }, 12000);
+  });
 </script>
-
 </body>
 </html>
 
