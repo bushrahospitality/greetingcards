@@ -13,26 +13,47 @@
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 9999;
+  z-index: 0;
 }
 
 .real-balloon{
   position: absolute;
-  top: -220px;
-  width: 90px;
+  bottom: -220px;
+  width: 80px;
   height: auto;
-  opacity: 0.3;
-  animation-name: balloonFall;
-  animation-timing-function: linear;
+  opacity: 0.5;
+  animation-name: balloonRise;
+  animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  will-change: transform, top, left;
+  will-change: transform, bottom, left;
 }
 
-@keyframes balloonFall {
-  0% { transform: translateY(-100px) scale(0.8); opacity: 0; }
-  10% { opacity: 1; }
-  50% { transform: translateY(50vh) translateX(20px) rotate(5deg); }
-  100% { transform: translateY(120vh) translateX(-20px) rotate(-5deg); }
+@keyframes balloonRise {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.45;
+  }
+
+  25% {
+    transform: translateY(-25vh) translateX(12px) rotate(3deg);
+  }
+
+  50% {
+    transform: translateY(-50vh) translateX(-14px) rotate(-3deg);
+  }
+
+  75% {
+    transform: translateY(-75vh) translateX(10px) rotate(2deg);
+  }
+
+  100% {
+    transform: translateY(-120vh) translateX(-8px) rotate(-2deg);
+    opacity: 0;
+  }
 }
     body {
       margin: 0;
@@ -238,42 +259,45 @@
   </div>
 
   <script src="js/app.js"></script>
- <script>
+<script>
   window.addEventListener("load", () => {
     const layer = document.getElementById("balloon-layer");
     if (!layer) return;
 
     const balloonImages = [
-      "balloon-gold-1.png",
-      "balloon-blue-1.png"
+      "images/balloon-gold.png",
+      "images/balloon-blue.png"
     ];
 
- const totalBalloons = 50;
+    // عدد مناسب للموبايل
+    const totalBalloons = window.innerWidth < 768 ? 10 : 16;
 
-for (let i = 0; i < totalBalloons; i++) {
+    for (let i = 0; i < totalBalloons; i++) {
+      const balloon = document.createElement("img");
+      balloon.className = "real-balloon";
+      balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
+      balloon.alt = "balloon";
 
-  const balloon = document.createElement("img");
-  balloon.className = "real-balloon";
+      const left = Math.random() * 100;
+      const size = window.innerWidth < 768
+        ? 55 + Math.random() * 35
+        : 70 + Math.random() * 45;
 
-  balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
+      const duration = 4 + Math.random() * 3; // سريع لكن ناعم
+      const delay = Math.random() * 1.2;
 
-  const left = Math.random() * 100;
-  const size = 60 + Math.random() * 40;
-  const duration = 2 + Math.random() * 2; // سريع
-  const delay = 0;      // يظهر بسرعة
+      balloon.style.left = `${left}%`;
+      balloon.style.width = `${size}px`;
+      balloon.style.animationDuration = `${duration}s`;
+      balloon.style.animationDelay = `${delay}s`;
 
-  balloon.style.left = `${left}%`;
-  balloon.style.width = `${size}px`;
-  balloon.style.animationDuration = `${duration}s`;
-  balloon.style.animationDelay = `${delay}s`;
+      layer.appendChild(balloon);
+    }
 
-  layer.appendChild(balloon);
-}
-
-    // حذف البالونات بعد نهاية الأنيميشن
+    // إزالة البالونات بعد نهاية الحركة
     setTimeout(() => {
       layer.innerHTML = "";
-    }, 12000);
+    }, 9000);
   });
 </script>
 </body>
