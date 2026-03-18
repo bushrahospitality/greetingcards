@@ -93,26 +93,29 @@
     ctx.fillText(name, nameX, nameY);
   }
 
-  function download() {
-    draw();
+function download() {
+  draw();  // رسم البطاقة أولًا
 
-    const dataUrl = canvas.toDataURL("image/png");
+  const dataUrl = canvas.toDataURL("image/png");
 
-    const safeName = (nameEl.value || "name")
-      .trim()
-      .replace(/[^\w\u0600-\u06FF\u00C0-\u017F\s-]/g, "")
-      .replace(/\s+/g, "_");
+  const safeName = (nameEl.value || "name")
+    .trim()
+    .replace(/[^\w\u0600-\u06FF\u00C0-\u017F\s-]/g, "")
+    .replace(/\s+/g, "_");
 
-    const lang = langEl.value || "ar";
-    downloadLink.href = dataUrl;
-    downloadLink.download = `Bushra_${lang}_${safeName}.png`;
-    downloadLink.click();
+  const lang = langEl.value || "ar";
+  downloadLink.href = dataUrl;
+  downloadLink.download = `Bushra_${lang}_${safeName}.png`;
 
-    // تظهر الرسالة بعد التنزيل
+  downloadLink.click();
+
+  // إظهار الرسالة بعد إغلاق الـ Popup
+  closePopupBtn.addEventListener("click", () => {
     setTimeout(() => {
       showEidPopup(nameEl.value);
-    }, 500);
-  }
+    }, 200);  // يظهر الرسالة بعد 0.2 ثانية من الإغلاق
+  });
+}
 
   function move(dx, dy) {
     nameX += dx;
@@ -127,12 +130,15 @@
   const closePopupBtn = document.getElementById("closePopupBtn");
 
   // دالة لإظهار الرسالة
-  function showEidPopup(employeeName) {
-    const cleanName = (employeeName || "").trim() || "زميلنا العزيز";
-    eidPopupTitle.textContent = `كل عام وأنت بخير ${cleanName}`;
-    eidPopupMessage.textContent = "عيد سعيد ✨";
-    eidPopup.classList.add("show");
-  }
+function showEidPopup(employeeName) {
+  // استخراج أول اسم فقط
+  const firstName = employeeName.split(' ')[0]; // يأخذ أول كلمة فقط
+  const cleanName = firstName || "زميلنا العزيز";  // إذا لم يكن هناك اسم، نعرض "زميلنا العزيز"
+  
+  eidPopupTitle.textContent = `كل عام وأنت بخير ${cleanName}`;
+  eidPopupMessage.textContent = "عيد سعيد ✨";
+  eidPopup.classList.add("show");
+}
 
   // دالة لإخفاء الرسالة
   function hideEidPopup() {
