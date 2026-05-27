@@ -19,7 +19,7 @@
 
   // مقاس الصور الحقيقي
   canvas.width = 2016;
-  canvas.height = 3540;
+  canvas.height = 3840;
 
   const ctx = canvas.getContext("2d");
 
@@ -35,7 +35,7 @@
 
   // مكان الاسم الافتراضي (المستطيل الأحمر)
   const DEFAULT_X = 1008;  // منتصف 2016
-  const DEFAULT_Y = 3150;  // تحت عبارة التهنئة
+  const DEFAULT_Y = 2850;  // تحت عبارة التهنئة
 
   let nameX = DEFAULT_X;
   let nameY = DEFAULT_Y;
