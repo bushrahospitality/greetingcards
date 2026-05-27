@@ -19,7 +19,7 @@
 
   // مقاس الصور الحقيقي
   canvas.width = 2016;
-  canvas.height = 3840;
+  canvas.height = 3540;
 
   const ctx = canvas.getContext("2d");
 
